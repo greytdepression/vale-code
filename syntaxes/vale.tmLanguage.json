@@ -1,0 +1,147 @@
+{
+    "$schema": "https://raw.githubusercontent.com/martinring/tmlanguage/master/tmlanguage.json",
+    "name": "Vale",
+    "fileTypes": [
+        "vale"
+    ],
+    "patterns": [
+        {
+            "include": "#keywords"
+        },
+        {
+            "include": "#strings"
+        },
+        {
+            "include": "#functions"
+        }
+    ],
+    "repository": {
+        "keywords": {
+            "patterns": [{
+                "name": "keyword.control.vale",
+                "match": "\\b(if|while|for|return|foreach|in)\\b"
+            }]
+        },
+        "strings": {
+            "name": "string.quoted.double.vale",
+            "begin": "\"",
+            "end": "\"",
+            "patterns": [
+                {
+                    "name": "constant.character.escape.vale",
+                    "match": "\\\\."
+                }
+            ]
+        },
+        "functions": {
+            "patterns": [
+                {
+                    "name": "meta.function.declaration.vale",
+                    "match": "(\\bexported\\s+)?(func)\\s+((?:\\w|_|[0-9])*)",
+                    "captures": {
+                        "1": {
+                            "name": "storage.modifier.linkage.vale"
+                        },
+                        "2": {
+                            "name": "keyword.function.vale"
+                        },
+                        "3": {
+                            "name": "entity.name.function.vale"
+                        }
+                    }
+                },
+                {
+                    "name": "meta.function.argument-list.vale",
+                    "begin": "(?<=(?:func).*?)(\\()",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "punctuation.begin.bracket.vale"
+                        }
+                    },
+                    "end": "(\\))",
+                    "endCaptures": {
+                        "1": {
+                            "name": "punctuation.end.bracket.vale"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "include": "#argument-list"
+                        }
+                    ]
+                }
+            ]
+        },
+        "argument-list": {
+            "patterns": [
+                {
+                    "name": "meta.argument.vale",
+                    "begin": "\\b((?:\\w|_)(?:\\w|_|[0-9])*)\\s+(&)?\\s*",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "variable.parameter.vale"
+                        },
+                        "2": {
+                            "name": "keyword.reference.vale"
+                        }
+                    },
+                    "end": "$|(,)|(?:(?=\\)))",
+                    "endCaptures": {
+                        "1": {
+                            "name": "punctuation.comma.vale"
+                        }
+                    },
+                    "patterns": [
+                        {
+                            "include": "#types"
+                        }
+                    ]
+                },
+                {
+                    "name": "punctuation.comma.vale",
+                    "match": ","
+                }
+            ]
+        },
+        "types": {
+            "patterns": [
+                {
+                    "name": "storage.type.primitive.vale",
+                    "match": "\\b(int|i64|bool|str)\\b"
+                },
+                {
+                    "name": "storage.type.other.vale",
+                    "match": "\\b(?:\\w|_)(?:\\w|_|[0-9])*\\b"
+                },
+                {
+                    "name": "storage.type.static-sized-array.vale",
+                    "begin": "(\\[)\\s*(#)([0-9]+)?\\s*(\\])\\s*(\\[)",
+                    "beginCaptures": {
+                        "1": {
+                            "name": "punctuation.begin.square-bracket.vale"
+                        },
+                        "2": {
+                            "name": "punctuation.hash.vale"
+                        },
+                        "3": {
+                            "name": "constant.numeric.vale"
+                        },
+                        "4": {
+                            "name": "punctuation.end.square-bracket.vale"
+                        },
+                        "5": {
+                            "name": "punctuation.begin.square-bracket.vale"
+                        }
+                    },
+                    "end": "(\\])",
+                    "endCaptures": {
+                        "1": {
+                            "name": "punctuation.end.square-bracket.vale"
+                        }
+                    }
+                }
+            ]
+        }
+    },
+    "scopeName": "source.vale"
+}

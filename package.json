@@ -1,0 +1,25 @@
+{
+  "name": "vale-code",
+  "displayName": "vale-code",
+  "description": "A Vale plugin for VSCode",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.74.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "vale",
+      "aliases": ["Vale", "vale"],
+      "extensions": [".vale",".vast"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "vale",
+      "scopeName": "source.vale",
+      "path": "./syntaxes/vale.tmLanguage.json"
+    }]
+  }
+}
